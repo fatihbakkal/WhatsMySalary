@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "Gelsin Paralar";
+    var remainTime = (DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) * 24 * 60 * 60) - ((DateTime.Now.Day * 24 * 60 * 60) + (DateTime.Now.Hour * 60 * 60) + (DateTime.Now.Minute * 60) + (DateTime.Now.Second));
+    var elapsedTime = (DateTime.Now.Day * 24 * 60 * 60) + (DateTime.Now.Hour * 60 * 60) + (DateTime.Now.Minute * 60) + (DateTime.Now.Second);
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<style>
+    @@media screen and (min-width:769px) {
+        .time {
+            font-size: 10em;
+            margin-bottom: 0px;
+        }
+
+        .time-info {
+            font-size: 3em;
+            margin-top: -30px;
+        }
+
+        .salary {
+            font-size: 5em;
+            margin-top: -20px;
+        }
+
+        .salary-info {
+            font-size: 3em;
+            font-weight: unset !important;
+        }
+    }
+
+    @@media screen and (min-width:481px) and (max-width:768px) {
+        .time {
+            font-size: 6em;
+            margin-bottom: 0px;
+        }
+
+        .time-info {
+            font-size: 1.8em;
+            margin-top: -30px;
+        }
+
+        .salary {
+            font-size: 4em;
+            margin-top: -20px;
+        }
+
+        .salary-info {
+            font-size: 2.4em;
+            font-weight: unset !important;
+        }
+    }
+
+    @@media screen and (max-width:480px) {
+        .time {
+            font-size: 4em;
+            margin-bottom: 0px;
+        }
+
+        .time-info {
+            font-size: 1.2em;
+            margin-top: -30px;
+        }
+
+        .salary {
+            font-size: 3.2em;
+            margin-top: -20px;
+        }
+
+        .salary-info {
+            font-size: 2em;
+            font-weight: unset !important;
+        }
+    }
+</style>
+
+<div class="row text-center">
+    <div class="col-md-12 col-xs-12">
+        <h2>MAAŞA NE KADAR KALDI?</h2>
+    </div>
+    <div class="col-md-12 col-xs-12">
+        <div class="col-md-3 col-xs-3">
+            <label class="time" id="day">00</label><br />
+            <label class="time-info">GÜN</label>
+        </div>
+        <div class="col-md-3 col-xs-3">
+            <label class="time" id="hour">00</label><br />
+            <label class="time-info">SAAT</label>
+        </div>
+        <div class="col-md-3 col-xs-3">
+            <label class="time" id="minute">00</label><br />
+            <label class="time-info">DAKİKA</label>
+        </div>
+        <div class="col-md-3 col-xs-3">
+            <label class="time" id="second">00</label><br />
+            <label class="time-info">SANİYE</label>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12" style="border-bottom:solid 1px;display:inline-block;max-width:90%;"></div>
+    <div class="col-md-12 col-xs-12">
+        <div class="col-md-12 col-xs-12">
+            <label class="salary-info">MAAŞ</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            <label class="salary" id="salary">0.00 ₺</label>
+        </div>
+    </div>
+</div>
+
+<script>
+    var elapsedSecond = @elapsedTime;
+    var remainSecond = @remainTime;
+    var salaryPerSec = parseFloat(0.0009195);
+    var salary = parseFloat(elapsedSecond * salaryPerSec);
+    var day,hour,minute,second = "";
+
+    $(document).ready(function(){
+        var interval = setInterval(increment,1000);
+
+        function increment(){
+            day = parseInt((remainSecond / 3600) / 24).toString();
+            hour = parseInt((remainSecond / 3600) % 24).toString();
+            minute = parseInt((remainSecond % 3600) / 60).toString();
+            second = parseInt(remainSecond % 60).toString();
+
+            $('#day').text(day<10?"0" + day : day);
+            $('#hour').text(hour<10?"0" + hour : hour);
+            $('#minute').text(minute<10?"0" + minute : minute);
+            $('#second').text(second<10?"0" + second : second);
+
+
+            salary += salaryPerSec;
+            $('#salary').text(salary.toFixed(4).toString() + " ₺");
+
+            remainSecond -= 1;
+            elapsedSecond += 1;
+        }
+
+    });
+
+    $('#btnCalc').click(function(){
+        salaryPerSec = parseFloat(parseFloat($('#calcMySalary').val()) / 30 / 24 / 60 / 60);
+        salary = parseFloat(elapsedSecond * salaryPerSec.toFixed(7));
+    });
+</script>
