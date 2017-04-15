@@ -4,9 +4,11 @@
     var remainTime = (DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) * 24 * 60 * 60) - ((DateTime.Now.Day * 24 * 60 * 60) + (DateTime.Now.Hour * 60 * 60) + (DateTime.Now.Minute * 60) + (DateTime.Now.Second));
     var elapsedTime = (DateTime.Now.Day * 24 * 60 * 60) + (DateTime.Now.Hour * 60 * 60) + (DateTime.Now.Minute * 60) + (DateTime.Now.Second);
 }
-
+<link href="~/Content/jquery.wordrotator.css" rel="stylesheet" />
+@*<script src="~/Scripts/jquery.wordrotator.min.js"></script>*@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-
+<script src="~/Scripts/jquery.wordrotator.js"></script>
+<link href="~/Content/animate.css" rel="stylesheet" />
 <style>
     @@media screen and (min-width:769px) {
         .time {
@@ -24,8 +26,13 @@
             margin-top: -20px;
         }
 
-        .salary-info {
-            font-size: 3em;
+        .back {
+            font-size: 3em !important;
+            font-weight: unset !important;
+        }
+
+        .front {
+            font-size: 3em !important;
             font-weight: unset !important;
         }
     }
@@ -100,11 +107,15 @@
     <div class="col-md-12 col-xs-12" style="border-bottom:solid 1px;display:inline-block;max-width:90%;"></div>
     <div class="col-md-12 col-xs-12">
         <div class="col-md-12 col-xs-12">
-            <label class="salary-info">MAAŞ</label>
+            <label id="myWords" class="salary-info"></label>
         </div>
         <div class="col-md-12 col-xs-12">
             <label class="salary" id="salary">0.00 ₺</label>
         </div>
+    </div>
+    <div>
+        @*<span id="myWords"></span>*@
+
     </div>
 </div>
 
@@ -137,10 +148,18 @@
             elapsedSecond += 1;
         }
 
+
+    });
+    $("#myWords").wordsrotator({
+        words: ['langırtta', 'çayda', 'sigarada', 'akşam yemeğinde', "Robert's Coffee'de",
+                'goygoyda']
     });
 
     $('#btnCalc').click(function(){
         salaryPerSec = parseFloat(parseFloat($('#calcMySalary').val()) / 30 / 24 / 60 / 60);
         salary = parseFloat(elapsedSecond * salaryPerSec.toFixed(7));
     });
+
+
+
 </script>
