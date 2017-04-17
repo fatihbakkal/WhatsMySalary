@@ -4,14 +4,16 @@
     var remainTime = (DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) * 24 * 60 * 60) - ((DateTime.Now.Day * 24 * 60 * 60) + (DateTime.Now.Hour * 60 * 60) + (DateTime.Now.Minute * 60) + (DateTime.Now.Second));
     var elapsedTime = (DateTime.Now.Day * 24 * 60 * 60) + (DateTime.Now.Hour * 60 * 60) + (DateTime.Now.Minute * 60) + (DateTime.Now.Second);
 }
-<link href="~/Content/jquery.wordrotator.css" rel="stylesheet" />
-@*<script src="~/Scripts/jquery.wordrotator.min.js"></script>*@
+
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.wordrotator.js"></script>
-<link href="~/Content/animate.css" rel="stylesheet" />
 <style>
+    span {
+        font-family: 'Lucida Sans';
+    }
+
     @@media screen and (min-width:769px) {
         .time {
+            font-family: Algerian;
             font-size: 10em;
             margin-bottom: 0px;
         }
@@ -22,17 +24,12 @@
         }
 
         .salary {
+            font-family: Algerian;
             font-size: 5em;
-            margin-top: -20px;
         }
 
-        .back {
-            font-size: 3em !important;
-            font-weight: unset !important;
-        }
-
-        .front {
-            font-size: 3em !important;
+        .salary-info {
+            font-size: 3em;
             font-weight: unset !important;
         }
     }
@@ -49,8 +46,8 @@
         }
 
         .salary {
+            font-family: Algerian;
             font-size: 4em;
-            margin-top: -20px;
         }
 
         .salary-info {
@@ -71,8 +68,8 @@
         }
 
         .salary {
+            font-family: Algerian;
             font-size: 3.2em;
-            margin-top: -20px;
         }
 
         .salary-info {
@@ -84,47 +81,52 @@
 
 <div class="row text-center">
     <div class="col-md-12 col-xs-12">
-        <h2>MAAŞA NE KADAR KALDI?</h2>
+        <span style="font-size:4em;"><b><i>Maaşa Ne Kadar Kaldı?</i></b></span>
     </div>
     <div class="col-md-12 col-xs-12">
         <div class="col-md-3 col-xs-3">
-            <label class="time" id="day">00</label><br />
-            <label class="time-info">GÜN</label>
+            <span class="time" id="day">00</span><br />
+            <span class="time-info">GÜN</span>
         </div>
         <div class="col-md-3 col-xs-3">
-            <label class="time" id="hour">00</label><br />
-            <label class="time-info">SAAT</label>
+            <span class="time" id="hour">00</span><br />
+            <span class="time-info">SAAT</span>
         </div>
         <div class="col-md-3 col-xs-3">
-            <label class="time" id="minute">00</label><br />
-            <label class="time-info">DAKİKA</label>
+            <span class="time" id="minute">00</span><br />
+            <span class="time-info">DAKİKA</span>
         </div>
         <div class="col-md-3 col-xs-3">
-            <label class="time" id="second">00</label><br />
-            <label class="time-info">SANİYE</label>
+            <span class="time" id="second">00</span><br />
+            <span class="time-info">SANİYE</span>
         </div>
     </div>
     <div class="col-md-12 col-xs-12" style="border-bottom:solid 1px;display:inline-block;max-width:90%;"></div>
     <div class="col-md-12 col-xs-12">
         <div class="col-md-12 col-xs-12">
-            <label id="myWords" class="salary-info"></label>
+            <span id="changingTxt" class="salary-info">☺☻☺☻☺☻</span>
         </div>
         <div class="col-md-12 col-xs-12">
-            <label class="salary" id="salary">0.00 ₺</label>
+            <span class="salary" id="salary">► 0.00</span>
+            <span class="salary" id="salary" style="font-family:Arial">&nbsp;₺ ◄</span>
         </div>
-    </div>
-    <div>
-        @*<span id="myWords"></span>*@
-
+        <div class="col-md-12 col-xs-12">
+            <span class="salary-info" style="margin-top:-30px;">kazanıldı.</span>
+        </div>
     </div>
 </div>
 
 <script>
+
     var elapsedSecond = @elapsedTime;
     var remainSecond = @remainTime;
     var salaryPerSec = parseFloat(0.0009195);
     var salary = parseFloat(elapsedSecond * salaryPerSec);
     var day,hour,minute,second = "";
+    var words = ['Langırtta fırfır yaparken', "Öğle yemeğinde", 'Çay yudumlarken',
+                 'Sigara fırtlarken', "Robert's Coffee'de",
+                 'Goygoy yaparken', "Meeting set ederken","Yezidlik yaparken"];
+    var i = 0;
 
     $(document).ready(function(){
         var interval = setInterval(increment,1000);
@@ -142,24 +144,44 @@
 
 
             salary += salaryPerSec;
-            $('#salary').text(salary.toFixed(4).toString() + " ₺");
+            $('#salary').text("► " + salary.toFixed(4).toString());
 
             remainSecond -= 1;
             elapsedSecond += 1;
         }
 
-
+        setInterval(function(){
+            $('#changingTxt').fadeOut(function(){
+                $(this).html(words[i=(i+1)%words.length]).fadeIn();
+            });
+        }, 3000);
     });
-    $("#myWords").wordsrotator({
-        words: ['langırtta', 'çayda', 'sigarada', 'akşam yemeğinde', "Robert's Coffee'de",
-                'goygoyda']
+
+    $("#calcMySalary").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#btnCalc").click();
+        }
     });
 
     $('#btnCalc').click(function(){
-        salaryPerSec = parseFloat(parseFloat($('#calcMySalary').val()) / 30 / 24 / 60 / 60);
-        salary = parseFloat(elapsedSecond * salaryPerSec.toFixed(7));
+        var dayDifference = parseInt($('#dayDifference').val());
+
+        if(dayDifference <= 31 && dayDifference >= 1)
+        {
+            $.get("/Home/GetElapsedTime?salaryDay=" + dayDifference).done(function(obj) {
+                elapsedSecond = parseInt(obj);
+
+                salaryPerSec = parseFloat(parseFloat($('#calcMySalary').val()) / 30 / 24 / 60 / 60);
+                salary = parseFloat(elapsedSecond * salaryPerSec.toFixed(7));
+            });
+
+            $.get("/Home/GetRemainTime?salaryDay=" + dayDifference).done(function(obj) {
+                remainSecond = parseInt(obj);
+            });
+        }
+        else
+        {
+            alert("Maaş günü 1 ile 31 arası olmalıdır!");
+        }
     });
-
-
-
 </script>

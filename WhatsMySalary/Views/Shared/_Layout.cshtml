@@ -3,7 +3,7 @@
 
 <style>
     @@media screen and (min-width:769px) {
-    #myUl {
+        #myUl {
             float: right;
         }
     }
@@ -11,14 +11,14 @@
     @@media screen and (min-width:481px) and (max-width:768px) {
         #myUl {
             float: unset;
-            text-align:center;
+            text-align: center;
         }
     }
 
     @@media screen and (max-width:480px) {
         #myUl {
             float: unset;
-            text-align:center;
+            text-align: center;
         }
     }
 </style>
@@ -45,8 +45,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" id="myUl">
                     <li>
-                        <input type="text" class="input-sm navbar-form" id="calcMySalary" placeholder="Net Maaş Giriniz..." style="margin-right:8px;"/>
-                        <input type="button" class="btn-sm navbar-btn" id="btnCalc" value="Hesapla" />
+                        <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="2" min="1" max="30"
+                               class="input-sm navbar-form" id="dayDifference" placeholder="Maaş günü giriniz..." style="margin-right:8px;" />
+                        <input type="text" class="input-sm navbar-form" id="calcMySalary" placeholder="Net Maaş Giriniz..." style="margin-right:8px;" />
+                        <button type="submit" class="btn-sm navbar-btn" id="btnCalc">Hesapla</button>
                     </li>
                 </ul>
             </div>
