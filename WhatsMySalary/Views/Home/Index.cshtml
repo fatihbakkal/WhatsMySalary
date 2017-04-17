@@ -14,7 +14,7 @@
     @@media screen and (min-width:769px) {
         .time {
             font-family: Algerian;
-            font-size: 10em;
+            font-size: 9.2em;
             margin-bottom: 0px;
         }
 
@@ -36,6 +36,7 @@
 
     @@media screen and (min-width:481px) and (max-width:768px) {
         .time {
+            font-family: Algerian;
             font-size: 6em;
             margin-bottom: 0px;
         }
@@ -58,6 +59,7 @@
 
     @@media screen and (max-width:480px) {
         .time {
+            font-family: Algerian;
             font-size: 4em;
             margin-bottom: 0px;
         }
@@ -104,11 +106,11 @@
     <div class="col-md-12 col-xs-12" style="border-bottom:solid 1px;display:inline-block;max-width:90%;"></div>
     <div class="col-md-12 col-xs-12">
         <div class="col-md-12 col-xs-12">
-            <span id="changingTxt" class="salary-info">☺☻☺☻☺☻</span>
+            <span id="changingTxt" class="salary-info">☺ ☺</span>
         </div>
         <div class="col-md-12 col-xs-12">
-            <span class="salary" id="salary">► 0.00</span>
-            <span class="salary" id="salary" style="font-family:Arial">&nbsp;₺ ◄</span>
+            <span class="salary" id="salary">0.00</span>
+            <span class="salary" id="salary" style="font-family:Arial">&nbsp;₺</span>
         </div>
         <div class="col-md-12 col-xs-12">
             <span class="salary-info" style="margin-top:-30px;">kazanıldı.</span>
@@ -144,7 +146,7 @@
 
 
             salary += salaryPerSec;
-            $('#salary').text("► " + salary.toFixed(4).toString());
+            $('#salary').text(salary.toFixed(4).toString());
 
             remainSecond -= 1;
             elapsedSecond += 1;
